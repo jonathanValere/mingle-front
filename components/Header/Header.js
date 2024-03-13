@@ -1,15 +1,20 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
 import Logo from "../Logo/Logo";
+import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 
 import Colors from "../../Constants/Colors";
 
 export default function Header() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={styles.logoAndMessage}>
         <Logo />
-        <MaterialIcons name="message" size={32} color={Colors.primary} />
+        <Pressable onPress={() => console.log("Go to MessagesScreen")}>
+          <MaterialIcons name="message" size={32} color={Colors.primary} />
+        </Pressable>
       </View>
     </View>
   );
