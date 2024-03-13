@@ -1,10 +1,9 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import Constants from "expo-constants";
-
-import Colors from "../Constants/Colors";
 import Header from "../components/Header/Header";
+import Colors from "../Constants/Colors";
 
-export default function HomeScreen() {
+export default function SettingsScreen() {
   return (
     <View style={styles.container}>
       <Header />
@@ -12,8 +11,7 @@ export default function HomeScreen() {
         contentContainerStyle={styles.containerContent}
         showsVerticalScrollIndicator={false}
       >
-        <Text>Bonjour [username]</Text>
-        <Text>HomeScreen</Text>
+        <Text>SettingsScreen</Text>
       </ScrollView>
     </View>
   );

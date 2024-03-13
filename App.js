@@ -5,14 +5,18 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
-// Screens ---
+// Screens (component) ---
 import HomeScreen from "./screens/HomeScreen";
 import CreateScreen from "./screens/CreateScreen";
 import AlumnisScreen from "./screens/AlumnisScreen";
 import SessionsScreen from "./screens/SessionsScreen";
+import SettingsScreen from "./screens/SettingsScreen";
 
 import Colors from "./Constants/Colors";
+
+// Import component --
 
 const Tab = createBottomTabNavigator();
 const iconTabStyle = {
@@ -26,11 +30,12 @@ export default function App() {
         screenOptions={{
           tabBarStyle: { backgroundColor: Colors.primary },
           tabBarActiveTintColor: Colors.secondary,
-          tabBarInactiveTintColor: "white",
+          tabBarInactiveTintColor: Colors.white,
           tabBarLabelStyle: {
             fontSize: 11,
             fontWeight: "bold",
           },
+          headerShown: false,
         }}
       >
         <Tab.Screen
@@ -83,6 +88,19 @@ export default function App() {
             tabBarIcon: ({ focused }) => (
               <Entypo
                 name="list"
+                size={iconTabStyle.size}
+                color={focused ? Colors.secondary : Colors.white}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Ionicons
+                name="settings"
                 size={iconTabStyle.size}
                 color={focused ? Colors.secondary : Colors.white}
               />
