@@ -54,28 +54,14 @@ function Home() {
             return (
               <Entypo
                 name="home"
-                size={iconTabStyle.size}
+                size={25}
                 color={focused ? Colors.secondary : Colors.white}
               />
             );
           },
         }}
       />
-      <Tab.Screen
-        name="Create"
-        component={CreateScreen}
-        options={{
-          tabBarIcon: ({ focused }) => {
-            return (
-              <MaterialIcons
-                name="add-box"
-                size={iconTabStyle.size}
-                color={focused ? Colors.secondary : Colors.white}
-              />
-            );
-          },
-        }}
-      />
+
       <Tab.Screen
         name="Alumnis"
         component={AlumnisScreen}
@@ -87,6 +73,21 @@ function Home() {
               color={focused ? Colors.secondary : Colors.white}
             />
           ),
+        }}
+      />
+      <Tab.Screen
+        name="Create"
+        component={CreateScreen}
+        options={{
+          tabBarIcon: ({ focused }) => {
+            return (
+              <MaterialIcons
+                name="add-box"
+                size={40}
+                color={focused ? Colors.secondary : Colors.white}
+              />
+            );
+          },
         }}
       />
       <Tab.Screen

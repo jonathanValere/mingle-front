@@ -4,6 +4,7 @@ const Colors = {
   blueLight: "#CAE4EC",
   blueDark: "#84A6D8",
   greyLight: "#F2F2F2",
+  shadowColor: "#adb5bd",
   white: "#fff",
 };
 
