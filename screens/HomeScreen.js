@@ -68,13 +68,13 @@ const styles = StyleSheet.create({
   },
   overviewTitle: {
     color: Colors.white,
-    fontSize: 25,
+    fontSize: 22,
     fontWeight: "bold",
     marginBottom: 10,
   },
   overviewText: {
     color: Colors.white,
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: 14,
+    lineHeight: 18,
   },
 });

@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import Constants from "expo-constants";
 
-import Header from "../components/Header/Header";
-import Colors from "../Constants/Colors";
+import Header from "../../components/Header/Header";
+import Colors from "../../Constants/Colors";
 
 export default function MessagesScreen() {
   return (
