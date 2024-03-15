@@ -19,6 +19,7 @@ import AlumnisScreen from "./screens/AlumnisScreen";
 import SessionsScreen from "./screens/SessionsScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import MessagesScreen from "./screens/Messages/MessagesScreen";
+import SignupScreen from "./screens/SignupScreen";
 
 import Colors from "./Constants/Colors";
 import BackButton from "./components/Buttons/BackButton";
@@ -124,6 +125,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen name="MingleHome" component={Home} />
         <Stack.Screen
           name="Settings"
