@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: Colors.white,
     width: "100%",
-    height: 50,
+    height: 40,
     padding: 10,
     borderRadius: 4,
     color: Colors.primary,
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   containerBtn: {
     backgroundColor: Colors.primary,
     width: "100%",
-    height: 60,
+    height: 50,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 40,
