@@ -20,7 +20,7 @@ export default function SignupScreen({ setTokenAndId }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleSubmit = async () => {
     if (!username || !email || !password) {
@@ -43,34 +43,28 @@ export default function SignupScreen({ setTokenAndId }) {
 
   return (
     <LayoutAuthentication>
-      {error && Alert.alert("Error", error)}
+      {error &&
+        Alert.alert("Error", error, [
+          { text: "OK", onPress: () => setError(null) },
+        ])}
       <View style={styles.form}>
         <TextInput
           style={styles.input}
           placeholder="username"
           value={username}
-          onChangeText={(text) => {
-            setError(false);
-            setUsername(text);
-          }}
+          onChangeText={setUsername}
         />
         <TextInput
           style={styles.input}
           placeholder="email"
           value={email}
-          onChangeText={(text) => {
-            setError(false);
-            setEmail(text);
-          }}
+          onChangeText={setEmail}
         />
         <TextInput
           style={styles.input}
           placeholder="password"
           value={password}
-          onChangeText={(pass) => {
-            setError(false);
-            setPassword(pass);
-          }}
+          onChangeText={setPassword}
           secureTextEntry={true}
         />
 

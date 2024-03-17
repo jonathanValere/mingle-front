@@ -43,25 +43,22 @@ export default function LoginScreen({ setTokenAndId }) {
 
   return (
     <LayoutAuthentication>
-      {error && Alert.alert("Error", error)}
+      {error &&
+        Alert.alert("Error", error, [
+          { text: "OK", onPress: () => setError(null) },
+        ])}
       <View style={styles.form}>
         <TextInput
           style={styles.input}
           placeholder="email"
-          onChangeText={(text) => {
-            setError("");
-            return setEmail(text);
-          }}
+          onChangeText={setEmail}
           value={email}
         />
         <TextInput
           style={styles.input}
           placeholder="password"
           secureTextEntry={true}
-          onChangeText={(text) => {
-            setError("");
-            return setPassword(text);
-          }}
+          onChangeText={setPassword}
           value={password}
         />
 
