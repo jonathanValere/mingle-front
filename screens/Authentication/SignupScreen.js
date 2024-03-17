@@ -1,28 +1,80 @@
-import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Pressable,
+  Alert,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
+import axios from "axios";
 
 // import components --
 import LayoutAuthentication from "./LayoutAuthentication";
 
 import Colors from "../../Constants/Colors";
 
-export default function SignupScreen(props) {
+export default function SignupScreen({ setTokenAndId }) {
   const navigation = useNavigation();
-  console.log(props);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!username || !email || !password) {
+      setError("Missing parameters");
+    } else {
+      try {
+        const { data } = await axios.post("http://localhost:3000/signup", {
+          username,
+          email,
+          password,
+        });
+        if (data.token && data._id) {
+          setTokenAndId(data.token, data._id);
+        }
+      } catch (error) {
+        setError(error.response.data.message);
+      }
+    }
+  };
+
   return (
     <LayoutAuthentication>
+      {error && Alert.alert("Error", error)}
       <View style={styles.form}>
-        <TextInput style={styles.input} placeholder="username" />
-        <TextInput style={styles.input} placeholder="email" />
+        <TextInput
+          style={styles.input}
+          placeholder="username"
+          value={username}
+          onChangeText={(text) => {
+            setError(false);
+            setUsername(text);
+          }}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="email"
+          value={email}
+          onChangeText={(text) => {
+            setError(false);
+            setEmail(text);
+          }}
+        />
         <TextInput
           style={styles.input}
           placeholder="password"
+          value={password}
+          onChangeText={(pass) => {
+            setError(false);
+            setPassword(pass);
+          }}
           secureTextEntry={true}
         />
-        <Pressable
-          onPress={() => console.log("account created")}
-          style={styles.containerBtn}
-        >
+
+        <Pressable onPress={handleSubmit} style={styles.containerBtn}>
           <Text style={styles.btnTextToSignup}>Créer un compte</Text>
         </Pressable>
         <Pressable onPress={() => navigation.navigate("Login")}>
@@ -71,5 +123,9 @@ const styles = StyleSheet.create({
     color: Colors.secondary,
     fontWeight: "bold",
     fontSize: 12,
+  },
+  error: {
+    color: Colors.redError,
+    marginBottom: 20,
   },
 });

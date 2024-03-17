@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Pressable,
+  Alert,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import axios from "axios";
@@ -15,7 +22,7 @@ export default function LoginScreen({ setTokenAndId }) {
 
   const handleSubmit = async () => {
     if (!email || !password) {
-      setError("email or/and password missing");
+      setError("Email or/and password missing");
     } else {
       try {
         const { data } = await axios.post("http://localhost:3000/login", {
@@ -25,18 +32,18 @@ export default function LoginScreen({ setTokenAndId }) {
 
         if (data.token && data._id) {
           setTokenAndId(data.token, data._id);
-          console.log("connected");
         } else {
           setError("An error occurred");
         }
       } catch (error) {
-        console.log(error.response.data.message);
+        setError(error.response.data.message);
       }
     }
   };
 
   return (
     <LayoutAuthentication>
+      {error && Alert.alert("Error", error)}
       <View style={styles.form}>
         <TextInput
           style={styles.input}
@@ -57,7 +64,7 @@ export default function LoginScreen({ setTokenAndId }) {
           }}
           value={password}
         />
-        {error && <Text style={styles.error}>{error}</Text>}
+
         <Pressable onPress={handleSubmit} style={styles.containerBtn}>
           <Text style={styles.btnTextToSignup}>Se connecter</Text>
         </Pressable>
@@ -110,5 +117,6 @@ const styles = StyleSheet.create({
   },
   error: {
     color: Colors.redError,
+    marginBottom: 20,
   },
 });
