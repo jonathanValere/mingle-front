@@ -6,6 +6,7 @@ const Colors = {
   greyLight: "#F2F2F2",
   shadowColor: "#adb5bd",
   white: "#fff",
+  redError: "#c1121f",
 };
 
 export default Colors;

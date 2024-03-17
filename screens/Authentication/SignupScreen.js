@@ -1,23 +1,17 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TextInput,
-  Pressable,
-} from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-import Colors from "../Constants/Colors";
+// import components --
+import LayoutAuthentication from "./LayoutAuthentication";
 
-export default function SignupScreen() {
+import Colors from "../../Constants/Colors";
+
+export default function SignupScreen(props) {
+  const navigation = useNavigation();
+  console.log(props);
   return (
-    <KeyboardAwareScrollView>
-      <View style={styles.container}>
-        <Image
-          source={require("../assets/img/logo_authentification.png")}
-          style={styles.logo}
-        />
+    <LayoutAuthentication>
+      <View style={styles.form}>
         <TextInput style={styles.input} placeholder="username" />
         <TextInput style={styles.input} placeholder="email" />
         <TextInput
@@ -31,24 +25,20 @@ export default function SignupScreen() {
         >
           <Text style={styles.btnTextToSignup}>Créer un compte</Text>
         </Pressable>
-        <Pressable onPress={() => console.log("go to login page")}>
+        <Pressable onPress={() => navigation.navigate("Login")}>
           <Text style={styles.btnTextLogin}>J'ai déjà un compte</Text>
         </Pressable>
       </View>
-    </KeyboardAwareScrollView>
+    </LayoutAuthentication>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "blue",
-    flex: 1,
-    justifyContent: "center",
+  form: {
     alignItems: "center",
+    width: "100%",
     paddingHorizontal: 50,
-    marginTop: "35%",
     gap: 20,
-    backgroundColor: Colors.greyLight,
   },
   logo: {
     marginBottom: 20,

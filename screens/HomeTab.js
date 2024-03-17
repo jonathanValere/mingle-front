@@ -21,7 +21,7 @@ const iconTabStyle = {
   size: 20,
 };
 
-export default function HomeTab() {
+export default function HomeTab({ setTokenAndId }) {
   return (
     <Tab.Navigator
       screenOptions={{

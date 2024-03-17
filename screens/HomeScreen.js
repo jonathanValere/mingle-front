@@ -10,7 +10,7 @@ import Header from "../components/Header/Header";
 import ModalCustom from "../components/Modal/ModalCustom";
 import Overview from "../components/Overview/Overview";
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
   const navigation = useNavigation();
   const [isVisibleModal, setIsVisibleModal] = useState(false);
 
