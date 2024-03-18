@@ -61,7 +61,7 @@ export default function App() {
       ) : (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="MingleHome">
-            {() => <HomeTab userId={userId} />}
+            {(props) => <HomeTab userId={userId} {...props} />}
           </Stack.Screen>
           <Stack.Screen
             name="Settings"
@@ -70,7 +70,9 @@ export default function App() {
               headerLeft: () => <BackButton />,
             }}
           >
-            {() => <SettingsScreen setTokenAndId={setTokenAndId} />}
+            {(props) => (
+              <SettingsScreen setTokenAndId={setTokenAndId} {...props} />
+            )}
           </Stack.Screen>
         </Stack.Navigator>
       )}

@@ -1,4 +1,3 @@
-import { View, Text, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 // Import Icons --
@@ -21,7 +20,7 @@ const iconTabStyle = {
   size: 20,
 };
 
-export default function HomeTab({ setTokenAndId }) {
+export default function HomeTab({ userId }) {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -37,7 +36,6 @@ export default function HomeTab({ setTokenAndId }) {
     >
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
         options={{
           tabBarIcon: ({ focused }) => {
             return (
@@ -49,7 +47,9 @@ export default function HomeTab({ setTokenAndId }) {
             );
           },
         }}
-      />
+      >
+        {(props) => <HomeScreen userId={userId} {...props} />}
+      </Tab.Screen>
 
       <Tab.Screen
         name="Alumnis"
