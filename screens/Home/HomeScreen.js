@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { Text, StyleSheet, ActivityIndicator } from "react-native";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Constants from "expo-constants";
@@ -77,6 +77,7 @@ export default function HomeScreen({ userId, userToken }) {
         title={meet.meet_title}
         numAlumnis={numAlumnis}
         time={meet.meet_time}
+        idMeet={meet._id}
       />
     </LayoutScreen>
   );

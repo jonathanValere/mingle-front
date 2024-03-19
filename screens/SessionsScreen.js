@@ -1,18 +1,60 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ActivityIndicator, FlatList } from "react-native";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 import Constants from "expo-constants";
-import Header from "../components/Header/Header";
 import Colors from "../Constants/Colors";
 
-export default function SessionsScreen() {
-  return (
+import Header from "../components/Header/Header";
+import Meet from "../components/Meet/Meet";
+
+export default function SessionsScreen({ userToken }) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [listMeet, setListMeet] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get(`http://localhost:3000/meets`, {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        });
+
+        if (data) {
+          setListMeet(data.reverse());
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.log(error.response.data.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return isLoading ? (
+    <ActivityIndicator
+      size={"large"}
+      color={Colors.primary}
+      style={styles.activity}
+    />
+  ) : (
     <View style={styles.container}>
       <Header />
-      <ScrollView
+      <FlatList
         contentContainerStyle={styles.containerContent}
         showsVerticalScrollIndicator={false}
-      >
-        <Text>SessionsScreen</Text>
-      </ScrollView>
+        data={listMeet}
+        renderItem={({ item }) => (
+          <Meet
+            title={item.meet_title}
+            numAlumnis={item.meet_students.length}
+            time={item.meet_time ? item.meet_time : "1"}
+            idMeet={item._id}
+          />
+        )}
+      />
     </View>
   );
 }
@@ -24,7 +66,10 @@ const styles = StyleSheet.create({
     paddingTop: Constants.statusBarHeight,
   },
   containerContent: {
-    backgroundColor: Colors.greyLight,
+    backgroundColor: Colors.white,
     padding: 10,
+  },
+  activity: {
+    flex: 1,
   },
 });

@@ -6,10 +6,10 @@ import { Ionicons } from "@expo/vector-icons";
 
 import Colors from "../../Constants/Colors";
 
-export default function Meet({ title, time, numAlumnis }) {
+export default function Meet({ idMeet, title, time, numAlumnis }) {
   const navigation = useNavigation();
   return (
-    <Pressable onPress={() => navigation.navigate("Session")}>
+    <Pressable onPress={() => navigation.navigate("Session", { idMeet })}>
       <View style={styles.sessionContainer}>
         <View style={styles.sessionBlocInfoAndDate}>
           <Text style={styles.sessionDate}>Sujet : {title}</Text>
@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.greyLight,
     padding: 15,
     borderRadius: 5,
-    marginVertical: 10,
   },
   sessionDate: {
     fontSize: 16,

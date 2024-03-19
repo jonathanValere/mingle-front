@@ -83,7 +83,6 @@ export default function HomeTab({ userId, userToken }) {
       />
       <Tab.Screen
         name="Sessions"
-        component={SessionsScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <Entypo
@@ -93,7 +92,9 @@ export default function HomeTab({ userId, userToken }) {
             />
           ),
         }}
-      />
+      >
+        {(props) => <SessionsScreen userToken={userToken} {...props} />}
+      </Tab.Screen>
       <Tab.Screen
         name="Messages"
         component={MessagesScreen}
