@@ -61,7 +61,9 @@ export default function App() {
       ) : (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="MingleHome">
-            {(props) => <HomeTab userId={userId} {...props} />}
+            {(props) => (
+              <HomeTab userId={userId} userToken={userToken} {...props} />
+            )}
           </Stack.Screen>
           <Stack.Screen
             name="Settings"

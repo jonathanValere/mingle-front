@@ -1,9 +1,10 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import Constants from "expo-constants";
-import Header from "../components/Header/Header";
-import Colors from "../Constants/Colors";
 
-export default function AlumnisScreen() {
+import Colors from "../Constants/Colors";
+import Header from "../components/Header/Header";
+
+export default function ({ children }) {
   return (
     <View style={styles.container}>
       <Header />
@@ -11,7 +12,7 @@ export default function AlumnisScreen() {
         contentContainerStyle={styles.containerContent}
         showsVerticalScrollIndicator={false}
       >
-        <Text>AlumnisScreen</Text>
+        {children}
       </ScrollView>
     </View>
   );
@@ -24,7 +25,6 @@ const styles = StyleSheet.create({
     paddingTop: Constants.statusBarHeight,
   },
   containerContent: {
-    backgroundColor: Colors.greyLight,
     padding: 10,
   },
 });

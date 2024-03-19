@@ -6,8 +6,8 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 
 // Import components --
-import HomeScreen from "./HomeScreen";
-import AlumnisScreen from "./AlumnisScreen";
+import HomeStack from "./Home/HomeStack";
+import AlumnisScreen from "./Alumnis/AlumnisScreen";
 import CreateScreen from "./CreateScreen";
 import SessionsScreen from "./SessionsScreen";
 import MessagesScreen from "./Messages/MessagesScreen";
@@ -20,7 +20,7 @@ const iconTabStyle = {
   size: 20,
 };
 
-export default function HomeTab({ userId }) {
+export default function HomeTab({ userId, userToken }) {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -35,7 +35,7 @@ export default function HomeTab({ userId }) {
       }}
     >
       <Tab.Screen
-        name="Home"
+        name="HomePage"
         options={{
           tabBarIcon: ({ focused }) => {
             return (
@@ -48,7 +48,9 @@ export default function HomeTab({ userId }) {
           },
         }}
       >
-        {(props) => <HomeScreen userId={userId} {...props} />}
+        {(props) => (
+          <HomeStack userId={userId} userToken={userToken} {...props} />
+        )}
       </Tab.Screen>
 
       <Tab.Screen
