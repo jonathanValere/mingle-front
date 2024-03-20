@@ -15,6 +15,8 @@ import LayoutAuthentication from "./LayoutAuthentication";
 import Colors from "../../Constants/Colors";
 
 export default function LoginScreen({ setTokenAndId }) {
+  const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
+
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +27,7 @@ export default function LoginScreen({ setTokenAndId }) {
       setError("Email or/and password missing");
     } else {
       try {
-        const { data } = await axios.post("http://localhost:3000/login", {
+        const { data } = await axios.post(`${apiUrl}/login`, {
           email,
           password,
         });

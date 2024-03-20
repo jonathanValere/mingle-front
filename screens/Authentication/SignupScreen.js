@@ -16,6 +16,8 @@ import LayoutAuthentication from "./LayoutAuthentication";
 import Colors from "../../Constants/Colors";
 
 export default function SignupScreen({ setTokenAndId }) {
+  const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
+
   const navigation = useNavigation();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -27,7 +29,7 @@ export default function SignupScreen({ setTokenAndId }) {
       setError("Missing parameters");
     } else {
       try {
-        const { data } = await axios.post("http://localhost:3000/signup", {
+        const { data } = await axios.post(`${apiUrl}/signup`, {
           username,
           email,
           password,

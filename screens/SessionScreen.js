@@ -15,6 +15,8 @@ import "moment/locale/fr";
 import Colors from "../Constants/Colors";
 
 export default function SessionScreen({ route }) {
+  const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
+
   const { idMeet, userToken } = route.params;
   const [isLoading, setIsLoading] = useState(true);
   const [dataMeet, setDataMeet] = useState({});
@@ -23,14 +25,11 @@ export default function SessionScreen({ route }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(
-          `http://localhost:3000/meet/${idMeet}`,
-          {
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-            },
-          }
-        );
+        const { data } = await axios.get(`${apiUrl}/meet/${idMeet}`, {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        });
         if (data) {
           setDataMeet(data);
           const dateInitial = new Date(data.createdAt);

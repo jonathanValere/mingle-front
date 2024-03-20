@@ -12,6 +12,8 @@ import LayoutScreen from "../LayoutScreen";
 import Meet from "../../components/Meet/Meet";
 
 export default function HomeScreen({ userId, userToken }) {
+  const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
+
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState({});
   const [isVisibleModal, setIsVisibleModal] = useState(false);
@@ -23,9 +25,7 @@ export default function HomeScreen({ userId, userToken }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(
-          `http://localhost:3000/teacher/${userId}`
-        );
+        const { data } = await axios.get(`${apiUrl}/teacher/${userId}`);
 
         setUserData(data);
         setIsLoading(false);
@@ -36,7 +36,7 @@ export default function HomeScreen({ userId, userToken }) {
 
     const fetchMeet = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:3000/meets`, {
+        const { data } = await axios.get(`${apiUrl}/meets`, {
           headers: {
             Authorization: `Bearer ${userToken}`,
           },

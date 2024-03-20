@@ -9,13 +9,15 @@ import Header from "../../components/Header/Header";
 import Meet from "../../components/Meet/Meet";
 
 export default function SessionsScreen({ userToken }) {
+  const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
+
   const [isLoading, setIsLoading] = useState(true);
   const [listMeet, setListMeet] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:3000/meets`, {
+        const { data } = await axios.get(`${apiUrl}/meets`, {
           headers: {
             Authorization: `Bearer ${userToken}`,
           },
