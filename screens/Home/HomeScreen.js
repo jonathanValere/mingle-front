@@ -78,6 +78,7 @@ export default function HomeScreen({ userId, userToken }) {
         numAlumnis={numAlumnis}
         time={meet.meet_time}
         idMeet={meet._id}
+        userToken={userToken}
       />
     </LayoutScreen>
   );

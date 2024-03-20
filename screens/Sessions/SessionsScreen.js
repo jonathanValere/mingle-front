@@ -52,6 +52,7 @@ export default function SessionsScreen({ userToken }) {
             numAlumnis={item.meet_students.length}
             time={item.meet_time ? item.meet_time : "1"}
             idMeet={item._id}
+            userToken={userToken}
           />
         )}
       />

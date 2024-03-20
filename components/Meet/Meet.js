@@ -6,10 +6,12 @@ import { Ionicons } from "@expo/vector-icons";
 
 import Colors from "../../Constants/Colors";
 
-export default function Meet({ idMeet, title, time, numAlumnis }) {
+export default function Meet({ idMeet, userToken, title, time, numAlumnis }) {
   const navigation = useNavigation();
   return (
-    <Pressable onPress={() => navigation.navigate("Session", { idMeet })}>
+    <Pressable
+      onPress={() => navigation.navigate("Session", { idMeet, userToken })}
+    >
       <View style={styles.sessionContainer}>
         <View style={styles.sessionBlocInfoAndDate}>
           <Text style={styles.sessionDate}>Sujet : {title}</Text>
