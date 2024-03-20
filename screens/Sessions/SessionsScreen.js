@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import Constants from "expo-constants";
-import Colors from "../Constants/Colors";
+import Colors from "../../Constants/Colors";
 
-import Header from "../components/Header/Header";
-import Meet from "../components/Meet/Meet";
+import Header from "../../components/Header/Header";
+import Meet from "../../components/Meet/Meet";
 
 export default function SessionsScreen({ userToken }) {
   const [isLoading, setIsLoading] = useState(true);

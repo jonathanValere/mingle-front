@@ -11,7 +11,7 @@ const Stack = createNativeStackNavigator();
 export default function HomeStack({ userId, userToken }) {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Home">
+      <Stack.Screen name="HomePage">
         {(props) => {
           return (
             <HomeScreen userId={userId} userToken={userToken} {...props} />

@@ -7,7 +7,7 @@ export default function Logo() {
   const navigation = useNavigation();
   return (
     <View>
-      <Pressable onPress={() => navigation.navigate("HomePage")}>
+      <Pressable onPress={() => navigation.navigate("Home")}>
         <Image source={LogoUrl} />
       </Pressable>
     </View>

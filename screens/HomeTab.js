@@ -9,10 +9,11 @@ import { MaterialIcons } from "@expo/vector-icons";
 import HomeStack from "./Home/HomeStack";
 import AlumnisScreen from "./Alumnis/AlumnisScreen";
 import CreateScreen from "./CreateScreen";
-import SessionsScreen from "./SessionsScreen";
+import SessionsScreen from "./Sessions/SessionsScreen";
 import MessagesScreen from "./Messages/MessagesScreen";
 
 import Colors from "../Constants/Colors";
+import SessionsStack from "./Sessions/SessionsStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -35,7 +36,7 @@ export default function HomeTab({ userId, userToken }) {
       }}
     >
       <Tab.Screen
-        name="HomePage"
+        name="Home"
         options={{
           tabBarIcon: ({ focused }) => {
             return (
@@ -93,7 +94,7 @@ export default function HomeTab({ userId, userToken }) {
           ),
         }}
       >
-        {(props) => <SessionsScreen userToken={userToken} {...props} />}
+        {(props) => <SessionsStack userToken={userToken} {...props} />}
       </Tab.Screen>
       <Tab.Screen
         name="Messages"
