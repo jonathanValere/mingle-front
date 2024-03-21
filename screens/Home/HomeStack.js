@@ -1,7 +1,8 @@
-import { StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./HomeScreen";
 import SessionScreen from "../SessionScreen";
+
+import Colors from "../../Constants/Colors";
 
 // Import component --
 import BackButton from "../../components/Buttons/BackButton";
@@ -10,8 +11,14 @@ const Stack = createNativeStackNavigator();
 
 export default function HomeStack({ userId, userToken }) {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="HomePage">
+    <Stack.Navigator
+      screenOptions={{
+        cardStyle: { backgroundColor: Colors.white },
+        headerStyle: { backgroundColor: Colors.third },
+        headerTitleStyle: { fontSize: 16 },
+      }}
+    >
+      <Stack.Screen name="HomePage" options={{ headerShown: false }}>
         {(props) => {
           return (
             <HomeScreen userId={userId} userToken={userToken} {...props} />
@@ -21,7 +28,6 @@ export default function HomeStack({ userId, userToken }) {
       <Stack.Screen
         name="Session"
         options={{
-          headerShown: true,
           headerLeft: (props) => <BackButton {...props} />,
         }}
       >

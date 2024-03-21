@@ -38,7 +38,7 @@ export default function LoginScreen({ setTokenAndId }) {
           setError("An error occurred");
         }
       } catch (error) {
-        setError(error.response.data.message);
+        setError("An error occurred");
       }
     }
   };

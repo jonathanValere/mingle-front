@@ -1,4 +1,10 @@
-import { Text, StyleSheet, ActivityIndicator } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Constants from "expo-constants";
@@ -6,9 +12,9 @@ import Constants from "expo-constants";
 import Colors from "../../Constants/Colors";
 
 // Import des composants ---
+import Header from "../../components/Header/Header";
 import ModalCustom from "../../components/Modal/ModalCustom";
 import Overview from "../../components/Overview/Overview";
-import LayoutScreen from "../LayoutScreen";
 import Meet from "../../components/Meet/Meet";
 
 export default function HomeScreen({ userId, userToken }) {
@@ -19,16 +25,23 @@ export default function HomeScreen({ userId, userToken }) {
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [meet, setMeet] = useState([]);
   const [numAlumnis, setNumAlumnis] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
 
   const currentDate = new Date().getHours(); // aide pour le greetings
+
+  // console.log("HomeScreen >>>", userId);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(`${apiUrl}/teacher/${userId}`);
+        if (userId) {
+          const { data } = await axios.get(`${apiUrl}/teacher/${userId}`);
 
-        setUserData(data);
-        setIsLoading(false);
+          if (data) {
+            setUserData(data);
+            setIsLoading(false);
+          }
+        }
       } catch (error) {
         console.log(error.response.data.message);
       }
@@ -36,18 +49,21 @@ export default function HomeScreen({ userId, userToken }) {
 
     const fetchMeet = async () => {
       try {
-        const { data } = await axios.get(`${apiUrl}/meets`, {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        });
-        // Checking meet --
-        if (data) {
-          setMeet(data.at(-1));
-          setNumAlumnis(data.at(-1).meet_students.length);
+        if (userId) {
+          const { data } = await axios.get(`${apiUrl}/meets`, {
+            headers: {
+              Authorization: `Bearer ${userToken}`,
+            },
+          });
+          // Checking meet --
+          if (data) {
+            setMeet(data.at(-1));
+            setNumAlumnis(data.at(-1).meet_students.length);
+            setIsLoading(false);
+          }
         }
       } catch (error) {
-        console.log(error.response.data.message);
+        console.log(error);
       }
     };
 
@@ -62,25 +78,35 @@ export default function HomeScreen({ userId, userToken }) {
       style={styles.activity}
     />
   ) : (
-    <LayoutScreen>
-      <ModalCustom
-        isVisibleModal={isVisibleModal}
-        setIsVisibleModal={setIsVisibleModal}
-      />
-      <Text style={styles.greetings}>
-        {currentDate > 12 ? "Bonsoir" : "Bonjour"} {userData.account?.username}{" "}
-        !
-      </Text>
-      <Overview setIsVisibleModal={setIsVisibleModal} />
-      <Text style={styles.sessionTitle}>Dernière session de mentorat</Text>
-      <Meet
-        title={meet.meet_title}
-        numAlumnis={numAlumnis}
-        time={meet.meet_time}
-        idMeet={meet._id}
-        userToken={userToken}
-      />
-    </LayoutScreen>
+    <View style={styles.container}>
+      <Header />
+      <ScrollView
+        contentContainerStyle={styles.containerContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <ModalCustom
+          isVisibleModal={isVisibleModal}
+          setIsVisibleModal={setIsVisibleModal}
+        />
+        <Text style={styles.greetings}>
+          {currentDate > 12 ? "Bonsoir" : "Bonjour"}{" "}
+          {userData.account?.username} !
+        </Text>
+        <Overview setIsVisibleModal={setIsVisibleModal} />
+        <Text style={styles.sessionTitle}>Dernière session de mentorat</Text>
+        {meet ? (
+          <Meet
+            title={meet.meet_title}
+            numAlumnis={numAlumnis}
+            time={meet.meet_time}
+            idMeet={meet._id}
+            userToken={userToken}
+          />
+        ) : (
+          <Text>No session yet</Text>
+        )}
+      </ScrollView>
+    </View>
   );
 }
 

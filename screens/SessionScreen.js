@@ -50,7 +50,10 @@ export default function SessionScreen({ route }) {
       style={styles.activity}
     />
   ) : (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      style={styles.containerScrollView}
+    >
       <Text style={styles.title}>{dataMeet.meet_title}</Text>
       <View style={styles.bloc}>
         <Text style={styles.section}>Date de la séance</Text>
@@ -93,10 +96,12 @@ export default function SessionScreen({ route }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: Colors.white,
     paddingHorizontal: 10,
     paddingVertical: 30,
+    backgroundColor: Colors.white,
+  },
+  containerScrollView: {
+    flex: 1,
   },
   activity: {
     flex: 1,

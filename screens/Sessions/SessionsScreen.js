@@ -1,10 +1,17 @@
-import { View, StyleSheet, ActivityIndicator, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  FlatList,
+} from "react-native";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
 import Constants from "expo-constants";
+
 import Colors from "../../Constants/Colors";
 
+// Components --
 import Header from "../../components/Header/Header";
 import Meet from "../../components/Meet/Meet";
 
@@ -44,20 +51,24 @@ export default function SessionsScreen({ userToken }) {
   ) : (
     <View style={styles.container}>
       <Header />
-      <FlatList
-        contentContainerStyle={styles.containerContent}
-        showsVerticalScrollIndicator={false}
-        data={listMeet}
-        renderItem={({ item }) => (
-          <Meet
-            title={item.meet_title}
-            numAlumnis={item.meet_students.length}
-            time={item.meet_time ? item.meet_time : "1"}
-            idMeet={item._id}
-            userToken={userToken}
-          />
-        )}
-      />
+      {listMeet.length === 0 ? (
+        <Text>No meet found</Text>
+      ) : (
+        <FlatList
+          contentContainerStyle={styles.containerContent}
+          showsVerticalScrollIndicator={false}
+          data={listMeet}
+          renderItem={({ item }) => (
+            <Meet
+              title={item.meet_title}
+              numAlumnis={item.meet_students.length}
+              time={item.meet_time ? item.meet_time : "1"}
+              idMeet={item._id}
+              userToken={userToken}
+            />
+          )}
+        />
+      )}
     </View>
   );
 }

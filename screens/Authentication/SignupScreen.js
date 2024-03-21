@@ -34,11 +34,12 @@ export default function SignupScreen({ setTokenAndId }) {
           email,
           password,
         });
+
         if (data.token && data._id) {
           setTokenAndId(data.token, data._id);
         }
       } catch (error) {
-        setError(error.response.data.message);
+        setError("An error occurred");
       }
     }
   };
