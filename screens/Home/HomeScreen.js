@@ -56,11 +56,14 @@ export default function HomeScreen({ userId, userToken }) {
             },
           });
           // Checking meet --
-          if (data) {
-            setMeet(data.at(-1));
-            setNumAlumnis(data.at(-1).meet_students.length);
-            setIsLoading(false);
+          if (data.length > 0) {
+            const lastMeet = data.at(-1);
+            setMeet(lastMeet);
+            if (lastMeet.meet_students?.length !== 0) {
+              setNumAlumnis(data.at(-1).meet_students.length);
+            }
           }
+          setIsLoading(false);
         }
       } catch (error) {
         console.log(error);
@@ -94,7 +97,7 @@ export default function HomeScreen({ userId, userToken }) {
         </Text>
         <Overview setIsVisibleModal={setIsVisibleModal} />
         <Text style={styles.sessionTitle}>Dernière session de mentorat</Text>
-        {meet ? (
+        {meet.meet_title ? (
           <Meet
             title={meet.meet_title}
             numAlumnis={numAlumnis}
