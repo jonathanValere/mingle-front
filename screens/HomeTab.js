@@ -6,13 +6,15 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 
 // Import components --
-import HomeStack from "./Home/HomeStack";
 import AlumnisScreen from "./Alumnis/AlumnisScreen";
-import CreateScreen from "./CreateScreen";
 import MessagesScreen from "./Messages/MessagesScreen";
 
 import Colors from "../Constants/Colors";
+
+// Import Stack --
+import HomeStack from "./Home/HomeStack";
 import SessionsStack from "./Sessions/SessionsStack";
+import CreateStack from "./Create/CreateStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -68,7 +70,7 @@ export default function HomeTab({ userId, userToken }) {
       />
       <Tab.Screen
         name="Create"
-        component={CreateScreen}
+        component={CreateStack}
         options={{
           tabBarIcon: ({ focused }) => {
             return (

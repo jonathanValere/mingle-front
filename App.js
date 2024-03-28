@@ -76,6 +76,7 @@ export default function App() {
             options={{
               headerShown: true,
               headerLeft: () => <BackButton />,
+              headerTitle: "Paramètres",
             }}
           >
             {(props) => (
