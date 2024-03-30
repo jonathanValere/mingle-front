@@ -5,7 +5,7 @@ import {
   ScrollView,
   ActivityIndicator,
 } from "react-native";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Constants from "expo-constants";
 
@@ -16,6 +16,9 @@ import Header from "../../components/Header/Header";
 import ModalCustom from "../../components/Modal/ModalCustom";
 import Overview from "../../components/Overview/Overview";
 import Meet from "../../components/Meet/Meet";
+
+// import context --
+import { DarkModeContext } from "../../store/Context/DarkModeContext";
 
 export default function HomeScreen({ userId, userToken }) {
   const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
@@ -29,7 +32,7 @@ export default function HomeScreen({ userId, userToken }) {
 
   const currentDate = new Date().getHours(); // aide pour le greetings
 
-  // console.log("HomeScreen >>>", userId);
+  const { darkMode } = useContext(DarkModeContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,7 +84,14 @@ export default function HomeScreen({ userId, userToken }) {
       style={styles.activity}
     />
   ) : (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: darkMode ? Colors.darkgrey : Colors.white,
+        },
+      ]}
+    >
       <Header />
       <ScrollView
         contentContainerStyle={styles.containerContent}
@@ -91,12 +101,25 @@ export default function HomeScreen({ userId, userToken }) {
           isVisibleModal={isVisibleModal}
           setIsVisibleModal={setIsVisibleModal}
         />
-        <Text style={styles.greetings}>
+        <Text
+          style={[
+            styles.greetings,
+            { color: darkMode ? Colors.white : Colors.darkgrey },
+          ]}
+        >
           {currentDate > 12 ? "Bonsoir" : "Bonjour"}{" "}
           {userData.account?.username} !
         </Text>
+
         <Overview setIsVisibleModal={setIsVisibleModal} />
-        <Text style={styles.sessionTitle}>Dernière session de mentorat</Text>
+        <Text
+          style={[
+            styles.sessionTitle,
+            { color: darkMode ? Colors.white : Colors.darkgrey },
+          ]}
+        >
+          Dernière session de mentorat
+        </Text>
         {meet.meet_title ? (
           <Meet
             title={meet.meet_title}
@@ -115,7 +138,6 @@ export default function HomeScreen({ userId, userToken }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.white,
     flex: 1,
     paddingTop: Constants.statusBarHeight,
   },

@@ -8,6 +8,8 @@ const Colors = {
   shadowColor: "#adb5bd",
   white: "#fff",
   redError: "#c1121f",
+  darkgrey: "#22223b",
+  bgInputDarkMode: "#542e71",
 };
 
 export default Colors;

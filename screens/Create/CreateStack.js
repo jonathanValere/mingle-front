@@ -12,7 +12,7 @@ import Colors from "../../Constants/Colors";
 
 const Stack = createNativeStackNavigator();
 
-export default function CreateStack() {
+export default function CreateStack({ userToken }) {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -23,20 +23,19 @@ export default function CreateStack() {
       <Stack.Screen name="choice" component={ChoiceScreen} />
       <Stack.Screen
         name="createSession"
-        component={CreateSessionScreen}
         options={{
           headerShown: true,
           headerTitle: "Créer une session",
-          headerLeft: () => <BackButton />,
         }}
-      />
+      >
+        {(props) => <CreateSessionScreen userToken={userToken} {...props} />}
+      </Stack.Screen>
       <Stack.Screen
         name="createStudent"
         component={CreateStudentScreen}
         options={{
           headerShown: true,
           headerTitle: "Créer un(e) apprenant(e)",
-          headerLeft: () => <BackButton />,
         }}
       />
     </Stack.Navigator>

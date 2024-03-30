@@ -70,7 +70,6 @@ export default function HomeTab({ userId, userToken }) {
       />
       <Tab.Screen
         name="Create"
-        component={CreateStack}
         options={{
           tabBarIcon: ({ focused }) => {
             return (
@@ -82,7 +81,9 @@ export default function HomeTab({ userId, userToken }) {
             );
           },
         }}
-      />
+      >
+        {(props) => <CreateStack userToken={userToken} {...props} />}
+      </Tab.Screen>
       <Tab.Screen
         name="Sessions"
         options={{

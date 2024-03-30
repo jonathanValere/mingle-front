@@ -8,6 +8,7 @@ import Colors from "../../Constants/Colors";
 
 export default function Meet({ idMeet, userToken, title, time, numAlumnis }) {
   const navigation = useNavigation();
+
   return (
     <Pressable
       onPress={() => navigation.navigate("Session", { idMeet, userToken })}
