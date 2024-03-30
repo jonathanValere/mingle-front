@@ -6,7 +6,6 @@ import CreateSessionScreen from "./CreateSessionScreen";
 import CreateStudentScreen from "./CreateStudentScreen";
 
 // import components --
-import BackButton from "../../components/Buttons/BackButton";
 
 import Colors from "../../Constants/Colors";
 

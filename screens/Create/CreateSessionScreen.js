@@ -6,6 +6,7 @@ import {
   Pressable,
   ScrollView,
   Platform,
+  Alert,
 } from "react-native";
 import { useState, useContext } from "react";
 import axios from "axios";
@@ -52,25 +53,29 @@ export default function CreateSessionScreen({ navigation, userToken }) {
   // Submit ----
   const handleSubmit = async () => {
     try {
-      const { data } = await axios.post(
-        `${apiURL}/meet/create`,
-        {
-          title,
-          mode,
-          time,
-          actions,
-          comments,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
+      if (title) {
+        const { data } = await axios.post(
+          `${apiURL}/meet/create`,
+          {
+            title,
+            mode,
+            time,
+            actions,
+            comments,
           },
-        }
-      );
+          {
+            headers: {
+              Authorization: `Bearer ${userToken}`,
+            },
+          }
+        );
 
-      console.log(JSON.stringify(data, null, 2));
-      console.log("données envoyées");
-      navigation.navigate("SessionsStack", { screen: "Sessions" });
+        console.log(JSON.stringify(data, null, 2));
+        console.log("données envoyées");
+        navigation.navigate("SessionsStack", { screen: "Sessions" });
+      } else {
+        Alert.alert("Attention", "Le titre de la session est obligatoire.");
+      }
     } catch (error) {
       console.log(error);
     }
