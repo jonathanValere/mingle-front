@@ -6,8 +6,6 @@ import SessionScreen from "../SessionScreen";
 
 import Colors from "../../Constants/Colors";
 
-import BackButton from "../../components/Buttons/BackButton";
-
 const Stack = createStackNavigator();
 
 export default function SessionsStack({ userToken }) {
@@ -22,12 +20,7 @@ export default function SessionsStack({ userToken }) {
       <Stack.Screen name="SessionsStack" options={{ headerShown: false }}>
         {(props) => <SessionsScreen userToken={userToken} {...props} />}
       </Stack.Screen>
-      <Stack.Screen
-        name="Session"
-        options={{
-          headerLeft: (props) => <BackButton {...props} />,
-        }}
-      >
+      <Stack.Screen name="Session">
         {(props) => <SessionScreen {...props} />}
       </Stack.Screen>
     </Stack.Navigator>

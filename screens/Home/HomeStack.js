@@ -4,9 +4,6 @@ import SessionScreen from "../SessionScreen";
 
 import Colors from "../../Constants/Colors";
 
-// Import component --
-import BackButton from "../../components/Buttons/BackButton";
-
 const Stack = createNativeStackNavigator();
 
 export default function HomeStack({ userId, userToken }) {
@@ -25,12 +22,7 @@ export default function HomeStack({ userId, userToken }) {
           );
         }}
       </Stack.Screen>
-      <Stack.Screen
-        name="Session"
-        options={{
-          headerLeft: (props) => <BackButton {...props} />,
-        }}
-      >
+      <Stack.Screen name="Session">
         {(props) => <SessionScreen userId={userId} {...props} />}
       </Stack.Screen>
     </Stack.Navigator>

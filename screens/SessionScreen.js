@@ -61,7 +61,7 @@ export default function SessionScreen({ route }) {
       </View>
       <View style={styles.bloc}>
         <Text style={styles.section}>Durée de la séance</Text>
-        <Text>{dataMeet.meet_time ? dataMeet.meet_time : "0"} heure(s)</Text>
+        <Text>{dataMeet.meet_time ? dataMeet.meet_time : "0"} minute(s)</Text>
       </View>
 
       <View style={styles.bloc}>

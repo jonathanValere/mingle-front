@@ -23,7 +23,7 @@ export default function Meet({ idMeet, userToken, title, time, numAlumnis }) {
             </View>
             <View style={styles.sessionInfo}>
               <Ionicons name="time" size={20} color="black" />
-              <Text>{time} heure(s)</Text>
+              <Text>{time} minute(s)</Text>
             </View>
           </View>
         </View>
