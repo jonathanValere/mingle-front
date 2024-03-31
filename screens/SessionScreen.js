@@ -4,6 +4,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   ScrollView,
+  Alert,
 } from "react-native";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -13,14 +14,55 @@ import moment from "moment";
 import "moment/locale/fr";
 
 import Colors from "../Constants/Colors";
+import Button from "../components/Buttons/Button";
 
-export default function SessionScreen({ route }) {
+export default function SessionScreen({ route, navigation }) {
   const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
 
   const { idMeet, userToken } = route.params;
   const [isLoading, setIsLoading] = useState(true);
   const [dataMeet, setDataMeet] = useState({});
   const [dateMeet, setDateMeet] = useState("");
+
+  const HandleRemoveMeet = async () => {
+    try {
+      // Alert message --
+      Alert.alert(
+        "Attention",
+        "Etes-vous sûr(e) de vouloir supprimer la session ? Cette action est irreversible.",
+        [
+          { text: "Annuler", style: "cancel" },
+          {
+            text: "Confirmer",
+            onPress: async () => {
+              // If confirm, remove meet
+              try {
+                const { data } = await axios.delete(
+                  `${apiUrl}/meet/${idMeet}`,
+                  {
+                    headers: {
+                      Authorization: `Bearer ${userToken}`,
+                    },
+                  }
+                );
+                if (data) {
+                  Alert.alert(
+                    "Information",
+                    `La session "${dataMeet.meet_title}" a bien été supprimée!`
+                  );
+                  navigation.popToTop();
+                }
+              } catch (error) {
+                console.log(error);
+              }
+            },
+          },
+        ]
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -90,6 +132,12 @@ export default function SessionScreen({ route }) {
         <Text style={styles.section}>Commentaires</Text>
         <Text>{dataMeet.meet_comments}</Text>
       </View>
+      <Button
+        onPress={HandleRemoveMeet}
+        label="Supprimer"
+        bgColor={Colors.removeColor}
+        txtColor={Colors.white}
+      />
     </ScrollView>
   );
 }

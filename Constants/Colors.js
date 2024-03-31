@@ -8,6 +8,7 @@ const Colors = {
   shadowColor: "#adb5bd",
   white: "#fff",
   redError: "#c1121f",
+  removeColor: "#f28482",
   darkgrey: "#22223b",
   bgInputDarkMode: "#542e71",
 };

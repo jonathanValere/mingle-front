@@ -40,7 +40,7 @@ export default function SessionsScreen({ userToken }) {
     };
 
     fetchData();
-  }, []);
+  }, [listMeet]);
 
   return isLoading ? (
     <ActivityIndicator

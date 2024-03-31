@@ -70,9 +70,12 @@ export default function CreateSessionScreen({ navigation, userToken }) {
           }
         );
 
-        console.log(JSON.stringify(data, null, 2));
-        console.log("données envoyées");
-        navigation.navigate("SessionsStack", { screen: "Sessions" });
+        navigation.popToTop();
+        Alert.alert(
+          "Bravo !",
+          `La session "${data.meet_title}" a bien été créée!`
+        );
+        navigation.navigate("Sessions");
       } else {
         Alert.alert("Attention", "Le titre de la session est obligatoire.");
       }
