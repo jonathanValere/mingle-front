@@ -64,6 +64,10 @@ export default function SessionScreen({ route, navigation }) {
     }
   };
 
+  const UpdateHandler = () => {
+    navigation.navigate("SessionUpdate", { ...dataMeet, idMeet });
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -83,7 +87,7 @@ export default function SessionScreen({ route, navigation }) {
       }
     };
     fetchData();
-  }, []);
+  }, [dataMeet]);
 
   return isLoading ? (
     <ActivityIndicator
@@ -132,6 +136,12 @@ export default function SessionScreen({ route, navigation }) {
         <Text style={styles.section}>Commentaires</Text>
         <Text>{dataMeet.meet_comments}</Text>
       </View>
+      <Button
+        onPress={UpdateHandler}
+        label="Modifier"
+        bgColor={Colors.secondary}
+        txtColor={Colors.white}
+      />
       <Button
         onPress={HandleRemoveMeet}
         label="Supprimer"
