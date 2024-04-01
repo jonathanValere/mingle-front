@@ -44,7 +44,6 @@ export default function CreateStudentScreen({ navigation, userToken }) {
             },
           }
         );
-        console.log(data);
         navigation.popToTop();
         Alert.alert(
           "Bravo !",

@@ -57,7 +57,6 @@ export default function HomeTab({ userId, userToken }) {
 
       <Tab.Screen
         name="Alumnis"
-        component={AlumnisScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <FontAwesome5
@@ -67,7 +66,9 @@ export default function HomeTab({ userId, userToken }) {
             />
           ),
         }}
-      />
+      >
+        {(props) => <AlumnisScreen userToken={userToken} {...props} />}
+      </Tab.Screen>
       <Tab.Screen
         name="Create"
         options={{
