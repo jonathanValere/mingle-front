@@ -6,13 +6,13 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 
 // Import components --
-import AlumnisScreen from "./Alumnis/AlumnisScreen";
 import MessagesScreen from "./Messages/MessagesScreen";
 
 import Colors from "../Constants/Colors";
 
 // Import Stack --
 import HomeStack from "./Home/HomeStack";
+import AlumnisStack from "./Alumnis/AlumnisStack";
 import SessionsStack from "./Sessions/SessionsStack";
 import CreateStack from "./Create/CreateStack";
 
@@ -67,7 +67,7 @@ export default function HomeTab({ userId, userToken }) {
           ),
         }}
       >
-        {(props) => <AlumnisScreen userToken={userToken} {...props} />}
+        {(props) => <AlumnisStack userToken={userToken} {...props} />}
       </Tab.Screen>
       <Tab.Screen
         name="Create"

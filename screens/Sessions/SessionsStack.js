@@ -1,14 +1,10 @@
-import { Pressable, StyleSheet, Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { AntDesign } from "@expo/vector-icons";
-
 // Screens --
 import SessionsScreen from "./SessionsScreen";
 import SessionScreen from "../SessionScreen";
 
 import Colors from "../../Constants/Colors";
 import SessionUpdateScreen from "./SessionUpdateScreen";
-import BtnMenu from "../../components/Buttons/BtnMenu";
 
 const Stack = createStackNavigator();
 
