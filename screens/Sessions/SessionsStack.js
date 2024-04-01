@@ -1,4 +1,4 @@
-import { Pressable, Text } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { AntDesign } from "@expo/vector-icons";
 
@@ -8,6 +8,7 @@ import SessionScreen from "../SessionScreen";
 
 import Colors from "../../Constants/Colors";
 import SessionUpdateScreen from "./SessionUpdateScreen";
+import BtnMenu from "../../components/Buttons/BtnMenu";
 
 const Stack = createStackNavigator();
 
@@ -23,19 +24,13 @@ export default function SessionsStack({ userToken }) {
       <Stack.Screen name="SessionsStack" options={{ headerShown: false }}>
         {(props) => <SessionsScreen userToken={userToken} {...props} />}
       </Stack.Screen>
-      <Stack.Screen
-        name="Session"
-        options={{
-          headerRight: () => (
-            <Pressable onPress={() => console.log("affiche menu")}>
-              <AntDesign name="ellipsis1" size={24} color="black" />
-            </Pressable>
-          ),
-        }}
-      >
+      <Stack.Screen name="Session">
         {(props) => <SessionScreen {...props} />}
       </Stack.Screen>
-      <Stack.Screen name="SessionUpdate">
+      <Stack.Screen
+        name="SessionUpdate"
+        options={{ title: "Modifier la session" }}
+      >
         {(props) => <SessionUpdateScreen userToken={userToken} {...props} />}
       </Stack.Screen>
     </Stack.Navigator>

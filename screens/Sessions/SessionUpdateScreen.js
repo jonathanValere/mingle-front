@@ -8,7 +8,7 @@ import {
   Platform,
   Alert,
 } from "react-native";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 
 // Import Context ---
@@ -23,24 +23,38 @@ import Button from "../../components/Buttons/Button";
 
 export default function SessionUpdateScreen({ navigation, userToken, route }) {
   const { darkMode } = useContext(DarkModeContext);
+  const { idMeet } = route.params;
   const apiURL = process.env.EXPO_PUBLIC_BACKEND;
 
-  const {
-    meet_actions,
-    meet_comments,
-    meet_mode,
-    meet_time,
-    meet_title,
-    idMeet,
-  } = route.params;
-
   // State filed of form
-  const [title, setTitle] = useState(meet_title);
-  const [mode, setMode] = useState(meet_mode);
-  const [time, setTime] = useState(String(meet_time));
-  const [actions, setActions] = useState(meet_actions);
+  const [title, setTitle] = useState(null);
+  const [mode, setMode] = useState();
+  const [time, setTime] = useState("0");
+  const [actions, setActions] = useState([]);
   const [itemAction, setItemAction] = useState("");
-  const [comments, setComments] = useState(meet_comments);
+  const [comments, setComments] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Get datas about meet --
+        const { data } = await axios.get(`${apiURL}/meet/${idMeet}`, {
+          headers: { Authorization: `Bearer ${userToken}` },
+        });
+
+        if (data) {
+          setTitle(data.meet_title);
+          setMode(data.meet_mode);
+          setTime(String(data.meet_time));
+          setActions(data.meet_actions);
+          setComments(data.meet_comments);
+        }
+      } catch (error) {
+        console.log("error >>>", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   // Handle Actions ---
   const handleAddAction = (item) => {

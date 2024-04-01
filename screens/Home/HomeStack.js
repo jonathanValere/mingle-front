@@ -1,6 +1,9 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+// Screen ---
 import HomeScreen from "./HomeScreen";
 import SessionScreen from "../SessionScreen";
+import SessionUpdateScreen from "../Sessions/SessionUpdateScreen";
 
 import Colors from "../../Constants/Colors";
 
@@ -24,6 +27,12 @@ export default function HomeStack({ userId, userToken }) {
       </Stack.Screen>
       <Stack.Screen name="Session">
         {(props) => <SessionScreen userId={userId} {...props} />}
+      </Stack.Screen>
+      <Stack.Screen
+        name="SessionUpdate"
+        options={{ title: "Modifier la session" }}
+      >
+        {(props) => <SessionUpdateScreen userToken={userToken} {...props} />}
       </Stack.Screen>
     </Stack.Navigator>
   );

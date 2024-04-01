@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
 import { useContext } from "react";
-import { Entypo } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import Colors from "../Constants/Colors";
 
@@ -23,12 +22,11 @@ export default function SettingsScreen({ setTokenAndId }) {
         <View style={styles.item}>
           <Text style={styles.itemTitle}>Mode</Text>
           <Pressable style={styles.itemBtn} onPress={toggleDarkMode}>
-            {darkMode ? (
-              <Entypo name="light-down" size={24} color="black" />
-            ) : (
-              <MaterialIcons name="dark-mode" size={24} color="black" />
-            )}
-
+            <MaterialCommunityIcons
+              name="theme-light-dark"
+              size={24}
+              color="black"
+            />
             <Text>{darkMode ? "Light" : "Dark"}</Text>
           </Pressable>
         </View>

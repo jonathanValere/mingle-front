@@ -46,7 +46,7 @@ export default function HomeScreen({ userId, userToken }) {
           }
         }
       } catch (error) {
-        console.log(error.response.data.message);
+        console.log(error.response?.data.message);
       }
     };
 
@@ -75,7 +75,7 @@ export default function HomeScreen({ userId, userToken }) {
 
     fetchData();
     fetchMeet();
-  }, [userId]);
+  }, [userId, meet]);
 
   return isLoading ? (
     <ActivityIndicator

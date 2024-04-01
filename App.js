@@ -1,3 +1,4 @@
+import "react-native-gesture-handler";
 import { StatusBar } from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -82,7 +83,6 @@ export default function App() {
               name="Settings"
               options={{
                 headerShown: true,
-                headerLeft: () => <BackButton />,
                 headerTitle: "Paramètres",
               }}
             >
