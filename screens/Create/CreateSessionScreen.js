@@ -19,6 +19,7 @@ import Colors from "../../Constants/Colors";
 
 // Components ---
 import Dropdown from "../../components/Dropdown/Dropdown";
+import Button from "../../components/Buttons/Button";
 
 export default function CreateSessionScreen({ navigation, userToken }) {
   const { darkMode } = useContext(DarkModeContext);
@@ -190,9 +191,12 @@ export default function CreateSessionScreen({ navigation, userToken }) {
             multiline={true}
           />
         </View>
-        <Pressable onPress={handleSubmit} style={styles.formSubmit}>
-          <Text style={styles.formSubmitText}>Créer une session</Text>
-        </Pressable>
+        <Button
+          label="Créer une session"
+          bgColor={Colors.primary}
+          txtColor={Colors.white}
+          onPress={handleSubmit}
+        />
       </View>
     </ScrollView>
   );

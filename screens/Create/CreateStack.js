@@ -31,12 +31,13 @@ export default function CreateStack({ userToken }) {
       </Stack.Screen>
       <Stack.Screen
         name="createStudent"
-        component={CreateStudentScreen}
         options={{
           headerShown: true,
           headerTitle: "Créer un(e) apprenant(e)",
         }}
-      />
+      >
+        {(props) => <CreateStudentScreen userToken={userToken} {...props} />}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 }

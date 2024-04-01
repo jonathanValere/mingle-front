@@ -1,5 +1,4 @@
 import { Text, StyleSheet, Pressable } from "react-native";
-import Colors from "../../Constants/Colors";
 
 export default function Button({ onPress, label, bgColor, txtColor }) {
   return (
@@ -20,6 +19,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   btnLabel: {
+    fontSize: 16,
     fontWeight: "bold",
   },
 });
