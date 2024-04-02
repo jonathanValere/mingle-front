@@ -2,14 +2,10 @@ import { View, Pressable, StyleSheet } from "react-native";
 
 import { Entypo } from "@expo/vector-icons";
 
-export default function BtnMenu({ isVisibleMenu, setIsVisibleMenu }) {
-  handleToggleMenu = () => {
-    setIsVisibleMenu(!isVisibleMenu);
-  };
-
+export default function BtnMenu({ toggleMenu }) {
   return (
     <View style={styles.container}>
-      <Pressable onPress={handleToggleMenu} style={styles.btnMenu}>
+      <Pressable onPress={toggleMenu} style={styles.btnMenu}>
         <Entypo
           name="dots-three-horizontal"
           size={18}

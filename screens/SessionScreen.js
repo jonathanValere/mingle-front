@@ -55,6 +55,14 @@ export default function SessionScreen({ route, navigation }) {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <BtnMenu toggleMenu={() => setIsVisibleMenu(!isVisibleMenu)} />
+      ),
+    });
+  }, [isVisibleMenu]);
+
   const HandleRemoveMeet = async () => {
     try {
       // Alert message --

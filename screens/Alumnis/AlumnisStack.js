@@ -1,9 +1,11 @@
+import { Text, Button } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 // Screens --
 import AlumnisScreen from "./AlumnisScreen";
 import AlumniScreen from "./AlumniScreen";
 import AlumniUpdateScreen from "./AlumniUpdateScreen";
+import BtnMenu from "../../components/Buttons/BtnMenu";
 
 import Colors from "../../Constants/Colors";
 
@@ -24,7 +26,10 @@ export default function AlumnisStack({ userToken }) {
       </Stack.Screen>
       <Stack.Screen
         name="Alumni"
-        options={{ title: "Fiche de l'apprenant(e)" }}
+        options={() => ({
+          title: "Fiche de l'apprenant(e)",
+          headerRight: () => <BtnMenu />, // Placeholder pour éviter le scintillement, peut être omis.
+        })}
       >
         {(props) => <AlumniScreen {...props} />}
       </Stack.Screen>

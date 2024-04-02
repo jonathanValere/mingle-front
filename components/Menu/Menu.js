@@ -4,18 +4,15 @@ import axios from "axios";
 
 import Colors from "../../Constants/Colors";
 
-export default function Menu({
-  userToken,
-  idStudent,
-  setIsVisibleMenu,
-  isVisibleMenu,
-}) {
+export default function Menu({ userToken, idStudent }) {
   const navigation = useNavigation();
   const route = useRoute();
   const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
 
+  console.log(route);
+
   // Handler Remove meet ---
-  const HandleRemoveMeet = async () => {
+  const HandleRemove = async () => {
     try {
       // Alert message --
       Alert.alert(
@@ -41,7 +38,6 @@ export default function Menu({
                   "Information",
                   `La fiche "${data.data.student_firstname} ${data.data.student_lastname}" a bien été supprimée!`
                 );
-                setIsVisibleMenu(!isVisibleMenu);
                 navigation.reset({
                   index: 0,
                   routes: [
@@ -67,12 +63,11 @@ export default function Menu({
           navigation.navigate("AlumniUpdate", {
             idStudent,
           });
-          setIsVisibleMenu(!isVisibleMenu);
         }}
       >
         <Text>Modifier</Text>
       </Pressable>
-      <Pressable onPress={HandleRemoveMeet}>
+      <Pressable onPress={HandleRemove}>
         <Text>Supprimer</Text>
       </Pressable>
     </View>
@@ -83,7 +78,7 @@ const styles = StyleSheet.create({
   menu: {
     position: "absolute",
     zIndex: 999,
-    backgroundColor: Colors.secondary,
+    backgroundColor: Colors.blueDark,
     gap: 15,
     padding: 15,
     top: 0,

@@ -15,8 +15,10 @@ import "moment/locale/fr";
 import Colors from "../../Constants/Colors";
 import BtnMenu from "../../components/Buttons/BtnMenu";
 import Menu from "../../components/Menu/Menu";
+import { useNavigation } from "@react-navigation/native";
 
-export default function AlumniScreen({ route, navigation }) {
+export default function AlumniScreen({ route }) {
+  const navigation = useNavigation();
   const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
 
   const { idStudent, userToken } = route.params;
@@ -40,16 +42,18 @@ export default function AlumniScreen({ route, navigation }) {
         console.log("ERROR an alumni >>>", error.message);
       }
     };
-    navigation.setOptions({
-      headerRight: () => (
-        <BtnMenu
-          setIsVisibleMenu={setIsVisibleMenu}
-          isVisibleMenu={isVisibleMenu}
-        />
-      ),
-    });
+
     fetchData();
   }, []);
+
+  // Handler toggle Menu on headerRight ---
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <BtnMenu toggleMenu={() => setIsVisibleMenu(!isVisibleMenu)} />
+      ),
+    });
+  }, [isVisibleMenu]);
 
   return isLoading ? (
     <ActivityIndicator
@@ -59,14 +63,7 @@ export default function AlumniScreen({ route, navigation }) {
     />
   ) : (
     <>
-      {isVisibleMenu && (
-        <Menu
-          setIsVisibleMenu={setIsVisibleMenu}
-          isVisibleMenu={isVisibleMenu}
-          idStudent={idStudent}
-          userToken={userToken}
-        />
-      )}
+      {isVisibleMenu && <Menu idStudent={idStudent} userToken={userToken} />}
       <ScrollView
         contentContainerStyle={styles.container}
         style={styles.containerScrollView}
