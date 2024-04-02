@@ -15,7 +15,6 @@ import moment from "moment";
 import "moment/locale/fr";
 
 import Colors from "../Constants/Colors";
-import Button from "../components/Buttons/Button";
 import BtnMenu from "../components/Buttons/BtnMenu";
 
 export default function SessionScreen({ route, navigation }) {
@@ -42,7 +41,7 @@ export default function SessionScreen({ route, navigation }) {
           setIsLoading(false);
         }
       } catch (error) {
-        console.log("error >>>", error.message);
+        console.log("error a Session >>>", error.message);
       }
     };
     navigation.setOptions({
@@ -54,7 +53,7 @@ export default function SessionScreen({ route, navigation }) {
       ),
     });
     fetchData();
-  }, [dataMeet]);
+  }, []);
 
   const HandleRemoveMeet = async () => {
     try {

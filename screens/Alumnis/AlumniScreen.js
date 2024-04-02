@@ -4,8 +4,6 @@ import {
   StyleSheet,
   ActivityIndicator,
   ScrollView,
-  Alert,
-  Pressable,
 } from "react-native";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -16,6 +14,7 @@ import "moment/locale/fr";
 
 import Colors from "../../Constants/Colors";
 import BtnMenu from "../../components/Buttons/BtnMenu";
+import Menu from "../../components/Menu/Menu";
 
 export default function AlumniScreen({ route, navigation }) {
   const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
@@ -38,7 +37,7 @@ export default function AlumniScreen({ route, navigation }) {
           setIsLoading(false);
         }
       } catch (error) {
-        console.log("error >>>", error.message);
+        console.log("ERROR an alumni >>>", error.message);
       }
     };
     navigation.setOptions({
@@ -50,48 +49,7 @@ export default function AlumniScreen({ route, navigation }) {
       ),
     });
     fetchData();
-  }, [dataStudent]);
-
-  const HandleRemoveMeet = async () => {
-    try {
-      // Alert message --
-      Alert.alert(
-        "Attention",
-        "Etes-vous sûr(e) de vouloir supprimer la fiche apprenant ? Cette action est irreversible.",
-        [
-          { text: "Annuler", style: "cancel" },
-          {
-            text: "Confirmer",
-            onPress: async () => {
-              // If confirm, remove meet
-              try {
-                const { data } = await axios.delete(
-                  `${apiUrl}/student/${idStudent}`,
-                  {
-                    headers: {
-                      Authorization: `Bearer ${userToken}`,
-                    },
-                  }
-                );
-                if (data) {
-                  Alert.alert(
-                    "Information",
-                    `La fiche "${dataStudent.student_firstname}" a bien été supprimée!`
-                  );
-                  setIsVisibleMenu(!isVisibleMenu);
-                  navigation.popToTop();
-                }
-              } catch (error) {
-                console.log(error);
-              }
-            },
-          },
-        ]
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }, []);
 
   return isLoading ? (
     <ActivityIndicator
@@ -102,21 +60,12 @@ export default function AlumniScreen({ route, navigation }) {
   ) : (
     <>
       {isVisibleMenu && (
-        <View style={styles.menu}>
-          <Pressable
-            onPress={() => {
-              navigation.navigate("AlumniUpdate", {
-                idStudent,
-              });
-              setIsVisibleMenu(!isVisibleMenu);
-            }}
-          >
-            <Text>Modifier</Text>
-          </Pressable>
-          <Pressable onPress={HandleRemoveMeet}>
-            <Text>Supprimer</Text>
-          </Pressable>
-        </View>
+        <Menu
+          setIsVisibleMenu={setIsVisibleMenu}
+          isVisibleMenu={isVisibleMenu}
+          idStudent={idStudent}
+          userToken={userToken}
+        />
       )}
       <ScrollView
         contentContainerStyle={styles.container}

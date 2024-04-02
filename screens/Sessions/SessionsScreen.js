@@ -5,7 +5,8 @@ import {
   ActivityIndicator,
   FlatList,
 } from "react-native";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
+
 import axios from "axios";
 import Constants from "expo-constants";
 
@@ -14,33 +15,35 @@ import Colors from "../../Constants/Colors";
 // Components --
 import Header from "../../components/Header/Header";
 import Meet from "../../components/Meet/Meet";
+import { useFocusEffect } from "@react-navigation/native";
 
-export default function SessionsScreen({ userToken }) {
+export default function SessionsScreen({ userToken, navigation }) {
   const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
 
   const [isLoading, setIsLoading] = useState(true);
   const [listMeet, setListMeet] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get(`${apiUrl}/meets`, {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        });
+  useFocusEffect(
+    useCallback(() => {
+      const fetchData = async () => {
+        try {
+          const { data } = await axios.get(`${apiUrl}/meets`, {
+            headers: {
+              Authorization: `Bearer ${userToken}`,
+            },
+          });
 
-        if (data) {
-          setListMeet(data.reverse());
-          setIsLoading(false);
+          if (data) {
+            setListMeet(data.reverse());
+            setIsLoading(false);
+          }
+        } catch (error) {
+          console.log(error.response?.data.message);
         }
-      } catch (error) {
-        console.log(error.response?.data.message);
-      }
-    };
-
-    fetchData();
-  }, [listMeet]);
+      };
+      fetchData();
+    }, [])
+  );
 
   return isLoading ? (
     <ActivityIndicator

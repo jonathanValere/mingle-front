@@ -5,7 +5,7 @@ import {
   ActivityIndicator,
   FlatList,
 } from "react-native";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import axios from "axios";
 import Constants from "expo-constants";
 
@@ -15,32 +15,36 @@ import Colors from "../../Constants/Colors";
 import Header from "../../components/Header/Header";
 import Student from "../../components/Student/Student";
 
+import { useFocusEffect } from "@react-navigation/native";
+
 export default function AlumnisScreen({ userToken }) {
   const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
 
   const [isLoading, setIsLoading] = useState(true);
   const [studentList, setStudentList] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get(`${apiUrl}/students`, {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        });
+  useFocusEffect(
+    useCallback(() => {
+      const fetchData = async () => {
+        try {
+          const { data } = await axios.get(`${apiUrl}/students`, {
+            headers: {
+              Authorization: `Bearer ${userToken}`,
+            },
+          });
 
-        if (data) {
-          setStudentList(data.reverse());
-          setIsLoading(false);
+          if (data) {
+            setStudentList(data.reverse());
+            setIsLoading(false);
+          }
+        } catch (error) {
+          console.log("ERROR all alumins >>>", error.response?.data.message);
         }
-      } catch (error) {
-        console.log(error.response?.data.message);
-      }
-    };
+      };
 
-    fetchData();
-  }, [studentList]);
+      fetchData();
+    }, [])
+  );
 
   return isLoading ? (
     <ActivityIndicator

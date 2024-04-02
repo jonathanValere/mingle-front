@@ -12,6 +12,7 @@ const Stack = createStackNavigator();
 export default function AlumnisStack({ userToken }) {
   return (
     <Stack.Navigator
+      id="Alumnis"
       screenOptions={{
         cardStyle: { backgroundColor: Colors.white },
         headerStyle: { backgroundColor: Colors.third },
