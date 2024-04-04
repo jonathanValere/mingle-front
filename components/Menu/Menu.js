@@ -4,12 +4,10 @@ import axios from "axios";
 
 import Colors from "../../Constants/Colors";
 
-export default function Menu({ userToken, idStudent }) {
+export default function Menu({ userToken, idItem }) {
   const navigation = useNavigation();
   const route = useRoute();
   const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
-
-  console.log(route);
 
   // Handler Remove meet ---
   const HandleRemove = async () => {
@@ -17,31 +15,40 @@ export default function Menu({ userToken, idStudent }) {
       // Alert message --
       Alert.alert(
         "Attention",
-        "Etes-vous sûr(e) de vouloir supprimer la fiche apprenant ? Cette action est irreversible.",
+        "Etes-vous sûr(e) de vouloir supprimer la fiche ? Cette action est irreversible.",
         [
           { text: "Annuler", style: "cancel" },
           {
             text: "Confirmer",
             onPress: async () => {
-              // If confirm, remove meet
+              // If confirm, remove
               try {
                 const { data } = await axios.delete(
-                  `${apiUrl}/student/${idStudent}`,
+                  route.name === "Alumni"
+                    ? `${apiUrl}/student/${idItem}`
+                    : `${apiUrl}/meet/${idItem}`,
                   {
                     headers: {
                       Authorization: `Bearer ${userToken}`,
                     },
                   }
                 );
-
+                // Get a succes message --
                 Alert.alert(
                   "Information",
-                  `La fiche "${data.data.student_firstname} ${data.data.student_lastname}" a bien été supprimée!`
+                  route.name === "Alumni"
+                    ? `La fiche "${data.data.student_firstname} ${data.data.student_lastname}" a bien été supprimée!`
+                    : `La fiche "${data.data.meet_title}" a bien été supprimée!`
                 );
                 navigation.reset({
                   index: 0,
                   routes: [
-                    { name: route.name ? "AlumnisStack" : "SessionsStack" },
+                    {
+                      name:
+                        route.name === "Alumni"
+                          ? "AlumnisStack"
+                          : "SessionsStack",
+                    },
                   ],
                 });
               } catch (error) {
@@ -60,9 +67,12 @@ export default function Menu({ userToken, idStudent }) {
     <View style={styles.menu}>
       <Pressable
         onPress={() => {
-          navigation.navigate("AlumniUpdate", {
-            idStudent,
-          });
+          navigation.navigate(
+            route.name === "Alumni" ? "AlumniUpdate" : "SessionUpdate",
+            {
+              idItem,
+            }
+          );
         }}
       >
         <Text>Modifier</Text>

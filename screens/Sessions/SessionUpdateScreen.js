@@ -23,7 +23,7 @@ import Button from "../../components/Buttons/Button";
 
 export default function SessionUpdateScreen({ navigation, userToken, route }) {
   const { darkMode } = useContext(DarkModeContext);
-  const { idMeet } = route.params;
+  const { idItem } = route.params;
   const apiURL = process.env.EXPO_PUBLIC_BACKEND;
 
   // State filed of form
@@ -38,7 +38,7 @@ export default function SessionUpdateScreen({ navigation, userToken, route }) {
     const fetchData = async () => {
       try {
         // Get datas about meet --
-        const { data } = await axios.get(`${apiURL}/meet/${idMeet}`, {
+        const { data } = await axios.get(`${apiURL}/meet/${idItem}`, {
           headers: { Authorization: `Bearer ${userToken}` },
         });
 
@@ -79,7 +79,7 @@ export default function SessionUpdateScreen({ navigation, userToken, route }) {
     try {
       if (title) {
         const { data } = await axios.put(
-          `${apiURL}/meet/${idMeet}`,
+          `${apiURL}/meet/${idItem}`,
           {
             title,
             mode,
@@ -94,7 +94,8 @@ export default function SessionUpdateScreen({ navigation, userToken, route }) {
           }
         );
 
-        navigation.goBack();
+        navigation.navigate("Session", { idMeet: idItem, userToken });
+
         Alert.alert(
           "Bravo !",
           `La session "${data.meet_title}" a bien été modifiée!`

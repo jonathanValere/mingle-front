@@ -4,10 +4,9 @@ import {
   StyleSheet,
   ActivityIndicator,
   ScrollView,
-  Alert,
-  Pressable,
 } from "react-native";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
 
 // package Gestion date --
@@ -16,93 +15,55 @@ import "moment/locale/fr";
 
 import Colors from "../Constants/Colors";
 import BtnMenu from "../components/Buttons/BtnMenu";
+import Menu from "../components/Menu/Menu";
 
 export default function SessionScreen({ route, navigation }) {
   const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
-
   const { idMeet, userToken } = route.params;
   const [isLoading, setIsLoading] = useState(true);
   const [dataMeet, setDataMeet] = useState({});
   const [dateMeet, setDateMeet] = useState("");
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get(`${apiUrl}/meet/${idMeet}`, {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        });
-        if (data) {
-          setDataMeet(data);
-          const dateInitial = new Date(data.createdAt);
-          setDateMeet(moment(dateInitial).format("dddd Do MMMM YYYY"));
-          setIsLoading(false);
+  // Permet de lancer la requête à chaque fois qu'on est focus sur l'écran --
+  useFocusEffect(
+    useCallback(() => {
+      const fetchData = async () => {
+        try {
+          // Initialise à zéro ---
+          setIsVisibleMenu(false);
+          // Lancer la requête --
+          const { data } = await axios.get(`${apiUrl}/meet/${idMeet}`, {
+            headers: {
+              Authorization: `Bearer ${userToken}`,
+            },
+          });
+          if (data) {
+            setDataMeet(data);
+            const dateInitial = new Date(data.createdAt);
+            setDateMeet(moment(dateInitial).format("dddd Do MMMM YYYY"));
+            setIsLoading(false);
+          }
+        } catch (error) {
+          console.log("error a Session >>>", error.message);
         }
-      } catch (error) {
-        console.log("error a Session >>>", error.message);
-      }
-    };
+      };
+      fetchData();
+    }, [])
+  );
+
+  // Gestion du menu --
+  useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <BtnMenu
-          setIsVisibleMenu={setIsVisibleMenu}
-          isVisibleMenu={isVisibleMenu}
+          toggleMenu={() => {
+            setIsVisibleMenu(!isVisibleMenu);
+          }}
         />
       ),
     });
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <BtnMenu toggleMenu={() => setIsVisibleMenu(!isVisibleMenu)} />
-      ),
-    });
   }, [isVisibleMenu]);
-
-  const HandleRemoveMeet = async () => {
-    try {
-      // Alert message --
-      Alert.alert(
-        "Attention",
-        "Etes-vous sûr(e) de vouloir supprimer la session ? Cette action est irreversible.",
-        [
-          { text: "Annuler", style: "cancel" },
-          {
-            text: "Confirmer",
-            onPress: async () => {
-              // If confirm, remove meet
-              try {
-                const { data } = await axios.delete(
-                  `${apiUrl}/meet/${idMeet}`,
-                  {
-                    headers: {
-                      Authorization: `Bearer ${userToken}`,
-                    },
-                  }
-                );
-                if (data) {
-                  Alert.alert(
-                    "Information",
-                    `La session "${dataMeet.meet_title}" a bien été supprimée!`
-                  );
-                  setIsVisibleMenu(!isVisibleMenu);
-                  navigation.popToTop();
-                }
-              } catch (error) {
-                console.log(error);
-              }
-            },
-          },
-        ]
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return isLoading ? (
     <ActivityIndicator
@@ -112,23 +73,7 @@ export default function SessionScreen({ route, navigation }) {
     />
   ) : (
     <>
-      {isVisibleMenu && (
-        <View style={styles.menu}>
-          <Pressable
-            onPress={() => {
-              navigation.navigate("SessionUpdate", {
-                idMeet,
-              });
-              setIsVisibleMenu(!isVisibleMenu);
-            }}
-          >
-            <Text>Modifier</Text>
-          </Pressable>
-          <Pressable onPress={HandleRemoveMeet}>
-            <Text>Supprimer</Text>
-          </Pressable>
-        </View>
-      )}
+      {isVisibleMenu && <Menu idItem={idMeet} userToken={userToken} />}
       <ScrollView
         contentContainerStyle={styles.container}
         style={styles.containerScrollView}

@@ -63,7 +63,7 @@ export default function AlumniScreen({ route }) {
     />
   ) : (
     <>
-      {isVisibleMenu && <Menu idStudent={idStudent} userToken={userToken} />}
+      {isVisibleMenu && <Menu idItem={idStudent} userToken={userToken} />}
       <ScrollView
         contentContainerStyle={styles.container}
         style={styles.containerScrollView}
