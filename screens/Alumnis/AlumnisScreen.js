@@ -16,6 +16,7 @@ import Header from "../../components/Header/Header";
 import Student from "../../components/Student/Student";
 
 import { useFocusEffect } from "@react-navigation/native";
+import NotFound from "../../components/NotFound/NotFound";
 
 export default function AlumnisScreen({ userToken }) {
   const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
@@ -56,7 +57,7 @@ export default function AlumnisScreen({ userToken }) {
     <View style={styles.container}>
       <Header />
       {studentList.length === 0 ? (
-        <Text>No student found</Text>
+        <NotFound texte="Vous n'avez aucun apprenant" />
       ) : (
         <FlatList
           contentContainerStyle={styles.containerContent}
