@@ -42,6 +42,10 @@ export default function AlumniScreen({ route }) {
         console.log("ERROR an alumni >>>", error.message);
       }
     };
+    // Gestion du menu lorsque l'on quitte l'écran
+    navigation.addListener("blur", () => {
+      setIsVisibleMenu(false);
+    });
 
     fetchData();
   }, []);

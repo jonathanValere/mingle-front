@@ -48,6 +48,7 @@ export default function SessionScreen({ route, navigation }) {
           console.log("error a Session >>>", error.message);
         }
       };
+
       fetchData();
     }, [])
   );
