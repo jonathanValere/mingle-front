@@ -26,13 +26,14 @@ export default function SessionsStack({ userToken }) {
         options={{
           title: "Fiche de la session",
           headerRight: () => <BtnMenu />,
+          headerBackTitle: "Retour",
         }}
       >
         {(props) => <SessionScreen {...props} />}
       </Stack.Screen>
       <Stack.Screen
         name="SessionUpdate"
-        options={{ title: "Modifier la session" }}
+        options={{ title: "Modifier la session", headerBackTitle: "Retour" }}
       >
         {(props) => <SessionUpdateScreen userToken={userToken} {...props} />}
       </Stack.Screen>

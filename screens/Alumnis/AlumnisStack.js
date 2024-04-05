@@ -29,13 +29,17 @@ export default function AlumnisStack({ userToken }) {
         options={() => ({
           title: "Fiche de l'apprenant(e)",
           headerRight: () => <BtnMenu />, // Placeholder pour éviter le scintillement, peut être omis.
+          headerBackTitle: "Retour",
         })}
       >
         {(props) => <AlumniScreen {...props} />}
       </Stack.Screen>
       <Stack.Screen
         name="AlumniUpdate"
-        options={{ title: "Modifier la fiche apprenant" }}
+        options={{
+          title: "Modifier la fiche apprenant",
+          headerBackTitle: "Retour",
+        }}
       >
         {(props) => <AlumniUpdateScreen userToken={userToken} {...props} />}
       </Stack.Screen>
