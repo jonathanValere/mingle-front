@@ -5,7 +5,7 @@ import {
   ActivityIndicator,
   ScrollView,
 } from "react-native";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 
 // package Gestion date --
@@ -15,7 +15,7 @@ import "moment/locale/fr";
 import Colors from "../../Constants/Colors";
 import BtnMenu from "../../components/Buttons/BtnMenu";
 import Menu from "../../components/Menu/Menu";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 export default function AlumniScreen({ route }) {
   const navigation = useNavigation();
@@ -26,29 +26,28 @@ export default function AlumniScreen({ route }) {
   const [dataStudent, setDataStudent] = useState({});
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get(`${apiUrl}/student/${idStudent}`, {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        });
-        if (data) {
-          setDataStudent(data);
-          setIsLoading(false);
-        }
-      } catch (error) {
-        console.log("ERROR an alumni >>>", error.message);
-      }
-    };
-    // Gestion du menu lorsque l'on quitte l'écran
-    navigation.addListener("blur", () => {
+  useFocusEffect(
+    useCallback(() => {
       setIsVisibleMenu(false);
-    });
+      const fetchData = async () => {
+        try {
+          const { data } = await axios.get(`${apiUrl}/student/${idStudent}`, {
+            headers: {
+              Authorization: `Bearer ${userToken}`,
+            },
+          });
+          if (data) {
+            setDataStudent(data);
+            setIsLoading(false);
+          }
+        } catch (error) {
+          console.log("ERROR an alumni >>>", error.message);
+        }
+      };
 
-    fetchData();
-  }, []);
+      fetchData();
+    }, [navigation])
+  );
 
   // Handler toggle Menu on headerRight ---
   useEffect(() => {

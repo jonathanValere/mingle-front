@@ -71,6 +71,7 @@ export default function Menu({ userToken, idItem }) {
             route.name === "Alumni" ? "AlumniUpdate" : "SessionUpdate",
             {
               idItem,
+              userToken,
             }
           );
         }}
