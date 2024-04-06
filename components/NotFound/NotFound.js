@@ -1,12 +1,11 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 import Colors from "../../Constants/Colors";
 import Button from "../Buttons/Button";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 export default function NotFound({ texte, btnLabel }) {
   const navigation = useNavigation();
-  const route = useRoute();
 
   const handleGoScreenAddNewItem = () => {
     navigation.navigate("Create", {

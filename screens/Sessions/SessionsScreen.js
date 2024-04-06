@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  ActivityIndicator,
-  FlatList,
-} from "react-native";
+import { View, StyleSheet, ActivityIndicator, FlatList } from "react-native";
 import { useCallback, useState } from "react";
 
 import axios from "axios";

@@ -6,6 +6,7 @@ import Colors from "../Constants/Colors";
 
 // Import context --
 import { DarkModeContext } from "../store/Context/DarkModeContext";
+import Button from "../components/Buttons/Button";
 
 export default function SettingsScreen({ setTokenAndId }) {
   const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
@@ -30,12 +31,12 @@ export default function SettingsScreen({ setTokenAndId }) {
             <Text>{darkMode ? "Light" : "Dark"}</Text>
           </Pressable>
         </View>
-        <Pressable
+        <Button
+          label="Se déconnecter"
+          bgColor={Colors.redError}
+          txtColor={Colors.white}
           onPress={() => setTokenAndId(null, null)}
-          style={styles.containerBtn}
-        >
-          <Text style={styles.textBtn}>Se déconnecter</Text>
-        </Pressable>
+        />
       </ScrollView>
     </View>
   );
@@ -49,20 +50,6 @@ const styles = StyleSheet.create({
   containerContent: {
     padding: 10,
     flex: 1,
-  },
-  containerBtn: {
-    borderRadius: 4,
-    width: "50%",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 10,
-    paddingVertical: 15,
-    backgroundColor: "#f28482",
-  },
-  textBtn: {
-    color: Colors.white,
-    fontSize: 14,
-    fontWeight: "bold",
   },
   item: {
     backgroundColor: Colors.greyLight,
