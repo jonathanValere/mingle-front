@@ -10,6 +10,7 @@ import Colors from "../../Constants/Colors";
 
 import { useContext } from "react";
 import { DarkModeContext } from "../../store/Context/DarkModeContext";
+import TitleScreen from "../../components/Title/TitleScreen";
 
 export default function ChoiceScreen({ navigation }) {
   const { darkMode } = useContext(DarkModeContext);
@@ -66,7 +67,6 @@ const styles = StyleSheet.create({
   contentBloc: {
     flex: 1,
     paddingVertical: 20,
-    paddingHorizontal: 10,
     marginHorizontal: 10,
   },
   contentBtn: {

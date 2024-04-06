@@ -11,6 +11,7 @@ import Student from "../../components/Student/Student";
 
 import { useFocusEffect } from "@react-navigation/native";
 import NotFound from "../../components/NotFound/NotFound";
+import TitleScreen from "../../components/Title/TitleScreen";
 
 export default function AlumnisScreen({ userToken }) {
   const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
@@ -56,19 +57,22 @@ export default function AlumnisScreen({ userToken }) {
           btnLabel="Créer un(e) apprenant(e)"
         />
       ) : (
-        <FlatList
-          contentContainerStyle={styles.containerContent}
-          showsVerticalScrollIndicator={false}
-          data={studentList}
-          renderItem={({ item }) => (
-            <Student
-              firstname={item.student_firstname}
-              lastname={item.student_lastname}
-              idStudent={item._id}
-              userToken={userToken}
-            />
-          )}
-        />
+        <>
+          <TitleScreen title="Liste des apprenants" />
+          <FlatList
+            contentContainerStyle={styles.containerContent}
+            showsVerticalScrollIndicator={false}
+            data={studentList}
+            renderItem={({ item }) => (
+              <Student
+                firstname={item.student_firstname}
+                lastname={item.student_lastname}
+                idStudent={item._id}
+                userToken={userToken}
+              />
+            )}
+          />
+        </>
       )}
     </View>
   );

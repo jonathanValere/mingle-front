@@ -11,6 +11,7 @@ import Header from "../../components/Header/Header";
 import Meet from "../../components/Meet/Meet";
 import { useFocusEffect } from "@react-navigation/native";
 import NotFound from "../../components/NotFound/NotFound";
+import TitleScreen from "../../components/Title/TitleScreen";
 
 export default function SessionsScreen({ userToken, navigation }) {
   const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
@@ -55,20 +56,23 @@ export default function SessionsScreen({ userToken, navigation }) {
           btnLabel="Créer une session"
         />
       ) : (
-        <FlatList
-          contentContainerStyle={styles.containerContent}
-          showsVerticalScrollIndicator={false}
-          data={listMeet}
-          renderItem={({ item }) => (
-            <Meet
-              title={item.meet_title}
-              numAlumnis={item.meet_students.length}
-              time={item.meet_time ? item.meet_time : "1"}
-              idMeet={item._id}
-              userToken={userToken}
-            />
-          )}
-        />
+        <>
+          <TitleScreen title="Liste des sessions" />
+          <FlatList
+            contentContainerStyle={styles.containerContent}
+            showsVerticalScrollIndicator={false}
+            data={listMeet}
+            renderItem={({ item }) => (
+              <Meet
+                title={item.meet_title}
+                numAlumnis={item.meet_students.length}
+                time={item.meet_time ? item.meet_time : "1"}
+                idMeet={item._id}
+                userToken={userToken}
+              />
+            )}
+          />
+        </>
       )}
     </View>
   );
