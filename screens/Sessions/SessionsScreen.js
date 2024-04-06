@@ -16,6 +16,7 @@ import Colors from "../../Constants/Colors";
 import Header from "../../components/Header/Header";
 import Meet from "../../components/Meet/Meet";
 import { useFocusEffect } from "@react-navigation/native";
+import NotFound from "../../components/NotFound/NotFound";
 
 export default function SessionsScreen({ userToken, navigation }) {
   const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
@@ -55,7 +56,10 @@ export default function SessionsScreen({ userToken, navigation }) {
     <View style={styles.container}>
       <Header />
       {listMeet.length === 0 ? (
-        <Text>No meet found</Text>
+        <NotFound
+          texte="Vous n'avez aucune session"
+          btnLabel="Créer une session"
+        />
       ) : (
         <FlatList
           contentContainerStyle={styles.containerContent}

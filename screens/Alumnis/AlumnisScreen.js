@@ -57,7 +57,10 @@ export default function AlumnisScreen({ userToken }) {
     <View style={styles.container}>
       <Header />
       {studentList.length === 0 ? (
-        <NotFound texte="Vous n'avez aucun apprenant" />
+        <NotFound
+          texte="Vous n'avez aucun apprenant"
+          btnLabel="Créer un(e) apprenant(e)"
+        />
       ) : (
         <FlatList
           contentContainerStyle={styles.containerContent}
