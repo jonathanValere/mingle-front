@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import Colors from "../../Constants/Colors";
@@ -7,7 +7,7 @@ export default function Student({ idStudent, userToken, firstname, lastname }) {
   const navigation = useNavigation();
 
   return (
-    <Pressable
+    <TouchableOpacity
       onPress={() => navigation.navigate("Alumni", { idStudent, userToken })}
     >
       <View style={styles.studentContainer}>
@@ -17,7 +17,7 @@ export default function Student({ idStudent, userToken, firstname, lastname }) {
           </Text>
         </View>
       </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 
