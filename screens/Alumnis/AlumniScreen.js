@@ -5,12 +5,14 @@ import {
   ActivityIndicator,
   ScrollView,
 } from "react-native";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 // package Gestion date --
 import moment from "moment";
 import "moment/locale/fr";
+
+import { DarkModeContext } from "../../store/Context/DarkModeContext";
 
 import Colors from "../../Constants/Colors";
 import BtnMenu from "../../components/Buttons/BtnMenu";
@@ -20,6 +22,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 export default function AlumniScreen({ route }) {
   const navigation = useNavigation();
   const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
+  const { darkMode } = useContext(DarkModeContext);
 
   const { idStudent, userToken } = route.params;
   const [isLoading, setIsLoading] = useState(true);
@@ -68,10 +71,18 @@ export default function AlumniScreen({ route }) {
     <>
       {isVisibleMenu && <Menu idItem={idStudent} userToken={userToken} />}
       <ScrollView
-        contentContainerStyle={styles.container}
+        contentContainerStyle={[
+          styles.container,
+          { backgroundColor: darkMode ? Colors.darkgrey : Colors.white },
+        ]}
         style={styles.containerScrollView}
       >
-        <Text style={styles.title}>
+        <Text
+          style={[
+            styles.title,
+            { color: darkMode ? Colors.white : Colors.primary },
+          ]}
+        >
           {dataStudent.student_firstname} {dataStudent.student_lastname}
         </Text>
         <View style={styles.bloc}>
@@ -87,7 +98,6 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
     paddingVertical: 30,
-    backgroundColor: Colors.white,
     flex: 1,
   },
   containerScrollView: {
@@ -99,7 +109,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    color: Colors.primary,
     marginBottom: 10,
   },
   bloc: {

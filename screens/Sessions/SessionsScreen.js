@@ -1,11 +1,13 @@
 import { View, StyleSheet, ActivityIndicator } from "react-native";
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 
 import axios from "axios";
 import Constants from "expo-constants";
 
 import Colors from "../../Constants/Colors";
+
+import { DarkModeContext } from "../../store/Context/DarkModeContext";
 
 // Components --
 import Header from "../../components/Header/Header";
@@ -16,6 +18,7 @@ import ListItems from "../../components/List/ListItems";
 
 export default function SessionsScreen({ userToken }) {
   const apiUrl = process.env.EXPO_PUBLIC_BACKEND; // Environment variable
+  const { darkMode } = useContext(DarkModeContext);
 
   const [isLoading, setIsLoading] = useState(true);
   const [listMeet, setListMeet] = useState([]);
@@ -50,7 +53,12 @@ export default function SessionsScreen({ userToken }) {
       style={styles.activity}
     />
   ) : (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: darkMode ? Colors.darkgrey : Colors.white },
+      ]}
+    >
       <Header />
       <TitleScreen title="Liste des sessions" />
       {listMeet.length === 0 ? (
@@ -78,7 +86,6 @@ export default function SessionsScreen({ userToken }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.white,
     flex: 1,
     paddingTop: Constants.statusBarHeight,
   },

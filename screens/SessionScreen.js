@@ -5,13 +5,15 @@ import {
   ActivityIndicator,
   ScrollView,
 } from "react-native";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
 
 // package Gestion date --
 import moment from "moment";
 import "moment/locale/fr";
+
+import { DarkModeContext } from "../store/Context/DarkModeContext";
 
 import Colors from "../Constants/Colors";
 import BtnMenu from "../components/Buttons/BtnMenu";
@@ -24,6 +26,7 @@ export default function SessionScreen({ route, navigation }) {
   const [dataMeet, setDataMeet] = useState({});
   const [dateMeet, setDateMeet] = useState("");
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
+  const { darkMode } = useContext(DarkModeContext);
 
   // Permet de lancer la requête à chaque fois qu'on est focus sur l'écran --
   useFocusEffect(
@@ -76,10 +79,20 @@ export default function SessionScreen({ route, navigation }) {
     <>
       {isVisibleMenu && <Menu idItem={idMeet} userToken={userToken} />}
       <ScrollView
-        contentContainerStyle={styles.container}
+        contentContainerStyle={[
+          styles.container,
+          { backgroundColor: darkMode ? Colors.darkgrey : Colors.white },
+        ]}
         style={styles.containerScrollView}
       >
-        <Text style={styles.title}>{dataMeet.meet_title}</Text>
+        <Text
+          style={[
+            styles.title,
+            { color: darkMode ? Colors.white : Colors.primary },
+          ]}
+        >
+          {dataMeet.meet_title}
+        </Text>
         <View style={styles.bloc}>
           <Text style={styles.section}>Date de la séance</Text>
           <Text>{dateMeet}</Text>
@@ -124,7 +137,6 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
     paddingVertical: 30,
-    backgroundColor: Colors.white,
     flex: 1,
   },
   containerScrollView: {
@@ -136,7 +148,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    color: Colors.primary,
     marginBottom: 10,
   },
   bloc: {

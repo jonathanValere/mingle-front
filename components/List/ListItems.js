@@ -1,12 +1,17 @@
 import { StyleSheet, FlatList } from "react-native";
+import { useContext } from "react";
 import { useRoute } from "@react-navigation/native";
 
+import { DarkModeContext } from "../../store/Context/DarkModeContext";
+
+// Components --
 import Student from "../Student/Student";
 import Meet from "../Meet/Meet";
 
 import Colors from "../../Constants/Colors";
 
 export default function ListItems({ itemSearch, list, userToken }) {
+  const { darkMode } = useContext(DarkModeContext);
   const route = useRoute();
 
   // filter --
@@ -17,6 +22,7 @@ export default function ListItems({ itemSearch, list, userToken }) {
     // Filter the list --
     const listFilter = listCopy.filter((item) => {
       if (route.name === "AlumnisStack") {
+        // Concatene firstname and lastname
         const fullName = `${item.student_firstname} ${item.student_lastname}`;
         // search
         return (
@@ -29,14 +35,16 @@ export default function ListItems({ itemSearch, list, userToken }) {
           item
         );
       }
-      // Concatene firstname and lastname
     });
     return listFilter;
   };
 
   return (
     <FlatList
-      contentContainerStyle={styles.containerContent}
+      contentContainerStyle={[
+        styles.containerContent,
+        { backgroundColor: darkMode ? Colors.darkgrey : Colors.white },
+      ]}
       showsVerticalScrollIndicator={false}
       data={handlerFilter()}
       renderItem={({ item }) =>
@@ -63,7 +71,6 @@ export default function ListItems({ itemSearch, list, userToken }) {
 
 const styles = StyleSheet.create({
   containerContent: {
-    backgroundColor: Colors.white,
     padding: 10,
   },
 });
