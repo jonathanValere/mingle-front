@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import { FontAwesome } from "@expo/vector-icons";
@@ -10,7 +10,7 @@ export default function Meet({ idMeet, userToken, title, time, numAlumnis }) {
   const navigation = useNavigation();
 
   return (
-    <Pressable
+    <TouchableOpacity
       onPress={() => navigation.navigate("Session", { idMeet, userToken })}
     >
       <View style={styles.sessionContainer}>
@@ -28,7 +28,7 @@ export default function Meet({ idMeet, userToken, title, time, numAlumnis }) {
           </View>
         </View>
       </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 
