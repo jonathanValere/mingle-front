@@ -6,7 +6,6 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 
 // Import components --
-import MessagesScreen from "./Messages/MessagesScreen";
 
 import Colors from "../Constants/Colors";
 
@@ -54,6 +53,22 @@ export default function HomeTab({ userId, userToken }) {
           <HomeStack userId={userId} userToken={userToken} {...props} />
         )}
       </Tab.Screen>
+      <Tab.Screen
+        name="Create"
+        options={{
+          tabBarIcon: ({ focused }) => {
+            return (
+              <MaterialIcons
+                name="add-box"
+                size={30}
+                color={focused ? Colors.secondary : Colors.white}
+              />
+            );
+          },
+        }}
+      >
+        {(props) => <CreateStack userToken={userToken} {...props} />}
+      </Tab.Screen>
 
       <Tab.Screen
         name="Alumnis"
@@ -69,22 +84,7 @@ export default function HomeTab({ userId, userToken }) {
       >
         {(props) => <AlumnisStack userToken={userToken} {...props} />}
       </Tab.Screen>
-      <Tab.Screen
-        name="Create"
-        options={{
-          tabBarIcon: ({ focused }) => {
-            return (
-              <MaterialIcons
-                name="add-box"
-                size={40}
-                color={focused ? Colors.secondary : Colors.white}
-              />
-            );
-          },
-        }}
-      >
-        {(props) => <CreateStack userToken={userToken} {...props} />}
-      </Tab.Screen>
+
       <Tab.Screen
         name="Sessions"
         options={{
@@ -99,19 +99,6 @@ export default function HomeTab({ userId, userToken }) {
       >
         {(props) => <SessionsStack userToken={userToken} {...props} />}
       </Tab.Screen>
-      <Tab.Screen
-        name="Messages"
-        component={MessagesScreen}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <MaterialIcons
-              name="message"
-              size={iconTabStyle.size}
-              color={focused ? Colors.secondary : Colors.white}
-            />
-          ),
-        }}
-      />
     </Tab.Navigator>
   );
 }
